@@ -1,21 +1,34 @@
-<h1 align="center">Hi, I'm Andreas 👋</h1>
+# Save this file as .github/workflows/tetris.yml in your profile repo (USERNAME/USERNAME)
+name: Generate Tetris
 
-<p align="center">
-  I enjoy working with networks, servers, and mobile apps.
-</p>
+on:
+  schedule:
+    - cron: "0 */5 * * *" # every 5 hours: 00:00, 05:00, 10:00, 15:00, 20:00 UTC
+  workflow_dispatch: # lets you run it manually from the Actions tab
+  push:
+    branches: [main]
 
-## 💻 Languages
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
 
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=py,c,cpp,kotlin" alt="Python, C, C++, Kotlin" />
-</p>
+      - name: Generate Tetris animation
+        uses: leereilly/contribution-graph-art@v1
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          animation_mode: "tetromino"
+          tetromino_count: "5"
+          palette: "auto"
+          output_path: dist/tetris.svg
 
-<!--
-ALTERNATIVE: labeled badges instead of the icon row above.
-Delete the icon block above and paste these lines in its place.
-
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![C](https://img.shields.io/badge/C-A8B9CC?style=for-the-badge&logo=c&logoColor=black)
-![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
-![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white)
--->
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
