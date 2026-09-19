@@ -46,5 +46,5 @@ Delete the icon block above and paste these lines in its place.
 > *"One Piece… is real!"*
 
 <p align="center">
-  <img alt="Tetris animation built from my GitHub contribution graph" src="https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-USERNAME/output/tetris.svg" />
+  <img alt="Tetris animation built from my GitHub contribution graph" src="https://raw.githubusercontent.com/mak3li/mak3li/output/tetris.svg" />
 </p>
